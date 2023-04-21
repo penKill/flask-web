@@ -2,7 +2,7 @@ from apps.base import base as base
 from .. import db
 from sqlalchemy import text
 from ..models.User import User
-from flask import jsonify
+from flask import jsonify, request
 from ..utils import response
 
 
@@ -22,6 +22,15 @@ def user():
 
 
 # 登录接口
-@base.route('/user/login')
+@base.route('/user/login', methods=['POST'])
 def login():
-    return 'hello world'
+    filters = []
+
+    username = request.json['username']
+    password = request.json['password']
+    if username:
+        filters.append(User.username == username)
+    if password:
+        filters.append(User.password == password)
+    data_list = User.query.filter(*filters).all()
+    return jsonify(response.json_list(data_list))
