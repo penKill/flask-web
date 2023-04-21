@@ -4,6 +4,7 @@ from sqlalchemy import text
 from ..models.User import User
 from flask import jsonify, request
 from ..utils import response
+from flask_cors import cross_origin
 
 
 @base.route('/index', methods=['GET'])
@@ -22,10 +23,12 @@ def user():
 
 
 # 登录接口
+@cross_origin(supports_credentials=True)
 @base.route('/user/login', methods=['POST'])
 def login():
     filters = []
 
+    print('come ')
     username = request.json['username']
     password = request.json['password']
     if username:
