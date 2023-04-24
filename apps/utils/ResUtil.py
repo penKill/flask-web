@@ -14,7 +14,7 @@ def json_list(list_data):
 
 
 # 成功获取到的数据
-def json_success():
+def success():
     return {'msg': '操作成功', 'code': 200, 'data': []}
 
 

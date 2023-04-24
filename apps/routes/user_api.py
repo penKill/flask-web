@@ -1,3 +1,5 @@
+import time
+
 from apps.base import base as base
 from .. import db
 from sqlalchemy import text
@@ -36,10 +38,8 @@ def login():
     if not data_list:
         return jsonify(ResUtil.log_error())
     else:
-        out = jsonify(ResUtil.json_list(data_list))
-        out.set_cookie('User-Info', 'this is good cookie')
         session['userInfo'] = 'userinfo-session'
-        return out
+        return jsonify(ResUtil.success())
 
 
 # 获取用户能拿到的菜单
@@ -49,3 +49,12 @@ def menu():
     print(user_info)
     data = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
     return jsonify(ResUtil.data(data))
+
+
+@base.route('/user/last-info', methods=['GET'])
+def last_info():
+    login_info = {
+        'last_time', time.time(),
+        'last_place', '广东省深圳市'
+    }
+    return jsonify(ResUtil.json_data(login_info))
