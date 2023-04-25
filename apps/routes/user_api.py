@@ -61,3 +61,15 @@ def last_info():
         'last_place': '广东省深圳市南山区'
     }
     return jsonify(ResUtil.data(login_info))
+
+
+# 今日代办事项
+@base.route('/user/todo-list', methods=['GET'])
+def todo_list():
+    data_list = []
+    for i in range(20):
+        data_list.append({
+            "title": "今日要做的事情{}".format(i),
+            "status": i & 3 == 0
+        })
+    return jsonify(ResUtil.data(data_list))
