@@ -1,3 +1,4 @@
+import datetime
 import time
 
 from apps.base import base as base
@@ -6,6 +7,7 @@ from sqlalchemy import text
 from ..models.User import User
 from flask import jsonify, request, session
 from ..utils import ResUtil
+import json
 
 
 @base.route('/index', methods=['GET'])
@@ -53,8 +55,9 @@ def menu():
 
 @base.route('/user/last-info', methods=['GET'])
 def last_info():
+    last_login_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     login_info = {
-        'last_time', time.time(),
-        'last_place', '广东省深圳市'
+        'last_time': last_login_time,
+        'last_place': '广东省深圳市南山区'
     }
-    return jsonify(ResUtil.json_data(login_info))
+    return jsonify(ResUtil.data(login_info))
