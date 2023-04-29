@@ -21,3 +21,8 @@ def success():
 # 登录失败
 def log_error():
     return {'msg': '操作成功', 'code': 500, 'data': '请检查用户名密码是否匹配'}
+
+
+# 尚未登录
+def un_log():
+    return {'msg': '尚未登录，请登录', 'code': 505, 'data': []}

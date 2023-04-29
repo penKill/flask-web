@@ -36,13 +36,34 @@ def login():
         filters.append(User.username == username)
     if password:
         filters.append(User.password == password)
-    data_list = User.query.filter(*filters).all()
-    if not data_list:
+    user_info = User.query.filter(*filters).one()
+    if not user_info:
         return jsonify(ResUtil.log_error())
     else:
-        session['userInfo'] = 'userinfo-session'
+        session['user-id'] = user_info.id
         return jsonify(ResUtil.success())
 
+
+# 获取用户当当前个人信息
+@base.route('/user/info', methods=['GET'])
+def user_info():
+    user_id = session.get('user-id')
+    if user_id:
+        user_info = User.query.filter(User.id == user_id).one()
+        return jsonify(ResUtil.data(user_info.to_simple()))
+    else:
+        return jsonify(ResUtil.un_log())
+
+
+# 登录退出处理
+@base.route('/user/login-out', methods=['GET'])
+def login_out():
+    user_id = session.get('user-id')
+    if user_id:
+        session.pop('user-id')
+        return jsonify(ResUtil.success())
+    else:
+        return jsonify(ResUtil.un_log())
 
 # 获取用户能拿到的菜单
 @base.route('/user/menu', methods=['GET'])
@@ -73,3 +94,16 @@ def todo_list():
             "status": i & 3 == 0
         })
     return jsonify(ResUtil.data(data_list))
+
+
+# 未阅读列表信息
+@base.route('/user/undo-list', methods=['GET'])
+def undo_list():
+    undo_list = []
+    for i in range(5):
+        undo_list.append({
+            "title": "今天要处理的bug的id是{},预计今天处理时间为 {}".format(str(i), time.strftime("%Y-%m-%d %H:%M:%S",
+                                                                                 time.localtime())),
+            "status": i % 3 == 0
+        })
+    return jsonify(ResUtil.data(undo_list))

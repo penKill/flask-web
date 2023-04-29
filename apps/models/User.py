@@ -18,6 +18,7 @@ class User(db.Model):
     phone = db.Column(db.String)
     create_time = db.Column(db.DATETIME, default=datetime.now)
     update_time = db.Column(db.DATETIME, default=datetime.now)
+    user_desc = db.Column(db.String)
 
     def __str__(self):
         return json.dump(self)
@@ -28,6 +29,7 @@ class User(db.Model):
     def __repr__(self):
         return '<Role %r>' % self.id
 
+    # 对象转给前端的时候调用的方法
     def to_json(self):
         return {
             'id': self.id,
@@ -36,5 +38,17 @@ class User(db.Model):
             'companyId': self.company_id,
             'gander': self.gander,
             'age': self.age,
+            'user-desc': self.user_desc,
+            'mail': self.mail
+        }
+
+    # 对象转给前端的时候调用的方法
+    def to_simple(self):
+        return {
+            'username': self.username,
+            'nickname': self.nickname,
+            'gander': self.gander,
+            'age': self.age,
+            'user-desc': self.user_desc,
             'mail': self.mail
         }
