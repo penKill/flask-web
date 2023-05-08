@@ -68,9 +68,11 @@ def login_out():
 # 获取用户能拿到的菜单
 @base.route('/user/menu', methods=['GET'])
 def menu():
-    user_info = session['userInfo']
-    print(user_info)
-    data = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+    # user_info = session['userInfo']
+    # print(user_info)
+    data = []
+    for i in range(100):
+        data.append('{}'.format(i))
     return jsonify(ResUtil.data(data))
 
 
