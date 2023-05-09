@@ -33,14 +33,18 @@ def login():
     password = request.json['password']
     if username:
         filters.append(User.username == username)
-    if password:
-        filters.append(User.password == password)
-    user_info = User.query.filter(*filters).one()
-    if not user_info:
+    try:
+        user_info = User.query.filter(*filters).one()
+        if not user_info and user_info.password is not password:
+            return jsonify(ResUtil.log_error())
+        else:
+
+            session['user-id'] = user_info.id
+    except:
+
         return jsonify(ResUtil.log_error())
-    else:
-        session['user-id'] = user_info.id
-        return jsonify(ResUtil.success())
+
+    return jsonify(ResUtil.success())
 
 
 # 获取用户当当前个人信息
