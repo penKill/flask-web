@@ -1,4 +1,7 @@
 # 返回的数据是object对象
+from flask_sqlalchemy.pagination import QueryPagination
+
+
 def json_data(data):
     return {'msg': '操作成功', 'code': 200, 'data': data.to_json()}
 
@@ -10,7 +13,7 @@ def data(data):
 
 # 返回数据为数组
 def json_list(list_data):
-    return {'msg': '操作成功', 'code': 200, 'data': [data.to_json() for data in list_data]}
+    return {'msg': '操作成功', 'code': 200, 'data': [item.to_json() for item in list_data]}
 
 
 # 成功获取到的数据
@@ -26,3 +29,15 @@ def log_error():
 # 尚未登录
 def un_log():
     return {'msg': '尚未登录，请登录', 'code': 505, 'data': []}
+
+
+# 返回数据为
+def paginate_data(paginate: QueryPagination):
+    return {'msg': '操作成功', 'code': 200, 'data': {
+        "pages": paginate.pages,
+        "total": paginate.total,
+        "hasNext": paginate.has_next,
+        "hasPrev": paginate.has_prev,
+        "prevNum": paginate.prev_num,
+        "items": [item.to_json() for item in paginate.items]
+    }}

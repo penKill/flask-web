@@ -13,6 +13,7 @@ def init_app():
     CORS(app, supports_credentials=True)
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:yyUXx3aHC88r@127.0.0.1:3306/lt'
+    app.config["SQLALCHEMY_ECHO"] = True
     # 解决jsonify返回乱码问题
     app.config['JSON_AS_ASCII'] = False
     # 配置session的密匙

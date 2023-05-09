@@ -80,11 +80,13 @@ def last_info():
 def user_search_list():
     username = request.args.get('username')
     gander = request.args.get('gander')
+    page = int(request.args.get('page') if request.args.get('page') else '1')
+    size = int(request.args.get('size') if request.args.get('size') else '10')
+    filters = []
+    if username:
+        filters.append(User.username.like('%{}%'.format(username)))
+    if gander:
+        filters.append(User.gander == gander)
+    paginate = User.query.filter(*filters).paginate(page=page, per_page=size)
 
-    data_list = []
-    for i in range(20):
-        data_list.append({
-            "title": "今日要做的事情{}".format(i),
-            "status": i & 3 == 0
-        })
-    return jsonify(ResUtil.data(data_list))
+    return jsonify(ResUtil.paginate_data(paginate))
