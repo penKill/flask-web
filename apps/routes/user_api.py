@@ -7,7 +7,6 @@ from sqlalchemy import text
 from ..models.User import User
 from flask import jsonify, request, session
 from ..utils import ResUtil
-import json
 
 
 @base.route('/index', methods=['GET'])
@@ -65,16 +64,6 @@ def login_out():
     else:
         return jsonify(ResUtil.un_log())
 
-# 获取用户能拿到的菜单
-@base.route('/user/menu', methods=['GET'])
-def menu():
-    # user_info = session['userInfo']
-    # print(user_info)
-    data = []
-    for i in range(100):
-        data.append('{}'.format(i))
-    return jsonify(ResUtil.data(data))
-
 
 @base.route('/user/last-info', methods=['GET'])
 def last_info():
@@ -86,9 +75,12 @@ def last_info():
     return jsonify(ResUtil.data(login_info))
 
 
-# 今日代办事项
-@base.route('/user/todo-list', methods=['GET'])
-def todo_list():
+# 搜索用户列表
+@base.route('/user/search', methods=['GET'])
+def user_search_list():
+    username = request.args.get('username')
+    gander = request.args.get('gander')
+
     data_list = []
     for i in range(20):
         data_list.append({
@@ -96,16 +88,3 @@ def todo_list():
             "status": i & 3 == 0
         })
     return jsonify(ResUtil.data(data_list))
-
-
-# 未阅读列表信息
-@base.route('/user/undo-list', methods=['GET'])
-def undo_list():
-    undo_list = []
-    for i in range(5):
-        undo_list.append({
-            "title": "今天要处理的bug的id是{},预计今天处理时间为 {}".format(str(i), time.strftime("%Y-%m-%d %H:%M:%S",
-                                                                                 time.localtime())),
-            "status": i % 3 == 0
-        })
-    return jsonify(ResUtil.data(undo_list))
