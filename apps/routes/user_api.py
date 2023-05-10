@@ -1,4 +1,3 @@
-import datetime
 import time
 
 from apps.base import base as base
@@ -7,7 +6,7 @@ from sqlalchemy import text
 from ..models.User import User
 from flask import jsonify, request, session
 from ..utils import ResUtil
-
+from datetime import datetime
 
 @base.route('/index', methods=['GET'])
 def index():
@@ -94,3 +93,15 @@ def user_search_list():
     paginate = User.query.filter(*filters).paginate(page=page, per_page=size)
 
     return jsonify(ResUtil.paginate_data(paginate))
+
+
+# 编辑用户信息
+@base.route('/user/edit', methods=['POST'])
+def user_edit():
+    res = User.query.get(request.json['id'])
+    res.update_time = datetime.now()
+    if 'username' in request.json: res.username = request.json['username']
+    if 'nickname' in request.json: res.nickname = request.json['nickname']
+    if 'mail' in request.json: res.nickname = request.json['mail']
+    db.session.add(res)
+    return jsonify(ResUtil.success())

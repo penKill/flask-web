@@ -1,11 +1,23 @@
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask.json import JSONEncoder
+from datetime import datetime, date
 
 # app
 
 db = SQLAlchemy()
+
+
+# 替换默认的json格式序列化
+class CustomJSONEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(obj, date):
+            return obj.strftime('%Y-%m-%d')
+        else:
+            return JSONEncoder.default(self, obj)
 
 
 def init_app():
@@ -18,6 +30,8 @@ def init_app():
     app.config['JSON_AS_ASCII'] = False
     # 配置session的密匙
     app.config['SECRET_KEY'] = 'yyUXx3aHC88r'
+
+    app.json_encoder = CustomJSONEncoder
 
     db.init_app(app)
 

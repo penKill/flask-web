@@ -38,7 +38,7 @@ class User(db.Model):
             'companyId': self.company_id,
             'gander': self.gander,
             'age': self.age,
-            'user-desc': self.user_desc,
+            'userDesc': self.user_desc,
             'mail': self.mail
         }
 
@@ -49,6 +49,6 @@ class User(db.Model):
             'nickname': self.nickname,
             'gander': self.gander,
             'age': self.age,
-            'user-desc': self.user_desc,
+            'userDesc': self.user_desc,
             'mail': self.mail
         }
