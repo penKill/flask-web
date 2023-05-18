@@ -2,9 +2,9 @@ import time
 from apps.base import base as base
 from flask import jsonify
 from ..utils import ResUtil
-from ..base.config import get_logger
+import logging
 
-logging = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 
 # 今日代办事项
@@ -16,7 +16,6 @@ def todo_list():
             "title": "今日要做的事情{}".format(i),
             "status": i & 3 == 0
         })
-    logger.info("这里是logger的信息")
     return jsonify(ResUtil.data(data_list))
 
 
@@ -30,6 +29,6 @@ def undo_list():
                                                                                  time.localtime())),
             "status": i % 3 == 0
         })
-    logging.error("这里是logger的信息")
+    logger.error("这里是logger的信息")
 
     return jsonify(ResUtil.data(undo_list))

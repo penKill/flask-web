@@ -4,20 +4,23 @@ from flask import jsonify
 from ..utils import ResUtil
 
 
+# 定义全局异常处理的地方
 def init_error_handler(app):
+    # 全局异常兜底
     @app.errorhandler(Exception)
-    def page_not_found(e):
-        print('hererererere')
+    def page_not_found(e: Exception):
+        return jsonify(ResUtil.server_error(500, e.__str__()))
 
+    # http请求的异常信息
     @app.errorhandler(HTTPException)
     def page_not_found(e: HTTPException):
         return jsonify(ResUtil.server_error(e.code, e.name))
 
+    # 处理500请求异常
     @app.errorhandler(500)
     def internal_server_error(e):
         print('hererererere')
 
-    # Return validation errors as JSON
     @app.errorhandler(422)
     @app.errorhandler(400)
     def handle_error(err):

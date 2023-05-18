@@ -7,9 +7,9 @@ from ..models.User import User
 from flask import jsonify, request, session
 from ..utils import ResUtil
 from datetime import datetime
-from ..base.config import get_logger
+import logging
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 
 @base.route('/index', methods=['GET'])
