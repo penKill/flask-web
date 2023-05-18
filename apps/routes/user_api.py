@@ -7,6 +7,9 @@ from ..models.User import User
 from flask import jsonify, request, session
 from ..utils import ResUtil
 from datetime import datetime
+from ..base.config import get_logger
+
+logger = get_logger(__name__)
 
 
 @base.route('/index', methods=['GET'])
@@ -40,8 +43,8 @@ def login():
         else:
 
             session['user-id'] = user_info.id
-    except:
-
+    except Exception as e:
+        logger.error('登录发生错误，error={}'.format(e))
         return jsonify(ResUtil.log_error())
 
     return jsonify(ResUtil.success())
