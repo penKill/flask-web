@@ -41,3 +41,8 @@ def paginate_data(paginate: QueryPagination):
         "prevNum": paginate.prev_num,
         "items": [item.to_json() for item in paginate.items]
     }}
+
+
+# 服务器错误返回消息
+def server_error(code: int, msg: str):
+    return {'msg': msg, 'code': code, 'data': []}
