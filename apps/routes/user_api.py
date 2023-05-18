@@ -8,6 +8,7 @@ from flask import jsonify, request, session
 from ..utils import ResUtil
 from datetime import datetime
 
+
 @base.route('/index', methods=['GET'])
 def index():
     connect = db.engine.connect()
@@ -102,6 +103,6 @@ def user_edit():
     res.update_time = datetime.now()
     if 'username' in request.json: res.username = request.json['username']
     if 'nickname' in request.json: res.nickname = request.json['nickname']
-    if 'mail' in request.json: res.nickname = request.json['mail']
+    if 'mail' in request.json: res.mail = request.json['mail']
     db.session.add(res)
     return jsonify(ResUtil.success())

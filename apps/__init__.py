@@ -26,6 +26,9 @@ def init_app():
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:yyUXx3aHC88r@127.0.0.1:3306/lt'
     app.config["SQLALCHEMY_ECHO"] = True
+    # 保证事务自动提交
+    app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+
     # 解决jsonify返回乱码问题
     app.config['JSON_AS_ASCII'] = False
     # 配置session的密匙
