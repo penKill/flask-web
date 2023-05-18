@@ -27,7 +27,7 @@ def log_error():
 
 
 # 尚未登录
-def un_log():
+def un_login():
     return {'msg': '尚未登录，请登录', 'code': 505, 'data': []}
 
 

@@ -55,7 +55,7 @@ def user_info():
         user_info = User.query.filter(User.id == user_id).one()
         return jsonify(ResUtil.data(user_info.to_simple()))
     else:
-        return jsonify(ResUtil.un_log())
+        return jsonify(ResUtil.un_login())
 
 
 # 登录退出处理
@@ -66,7 +66,7 @@ def login_out():
         session.pop('user-id')
         return jsonify(ResUtil.success())
     else:
-        return jsonify(ResUtil.un_log())
+        return jsonify(ResUtil.un_login())
 
 
 @base.route('/user/last-info', methods=['GET'])
