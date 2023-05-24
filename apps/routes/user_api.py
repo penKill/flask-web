@@ -86,14 +86,14 @@ def last_info():
 @base.route('/user/search', methods=['GET'])
 def user_search_list():
     username = request.args.get('username')
-    gander = request.args.get('gander')
+    gender = request.args.get('gender')
     page = int(request.args.get('page') if request.args.get('page') else '1')
     size = int(request.args.get('size') if request.args.get('size') else '10')
     filters = []
     if username:
         filters.append(User.username.like('%{}%'.format(username)))
-    if gander:
-        filters.append(User.gander == gander)
+    if gender:
+        filters.append(User.gender == gender)
     paginate = User.query.filter(*filters).paginate(page=page, per_page=size)
 
     return jsonify(ResUtil.paginate_data(paginate))

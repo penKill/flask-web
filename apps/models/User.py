@@ -12,7 +12,7 @@ class User(db.Model):
     password = db.Column(db.String)
     nickname = db.Column(db.String)
     company_id = db.Column(db.String)
-    gander = db.Column(db.Integer)
+    gender = db.Column(db.Integer)
     age = db.Column(db.Integer)
     mail = db.Column(db.String)
     phone = db.Column(db.String)
@@ -36,7 +36,7 @@ class User(db.Model):
             'username': self.username,
             'nickname': self.nickname,
             'companyId': self.company_id,
-            'gander': self.gander,
+            'gender': self.gender,
             'age': self.age,
             'userDesc': self.user_desc,
             'mail': self.mail
@@ -47,7 +47,7 @@ class User(db.Model):
         return {
             'username': self.username,
             'nickname': self.nickname,
-            'gander': self.gander,
+            'gender': self.gender,
             'age': self.age,
             'userDesc': self.user_desc,
             'mail': self.mail
