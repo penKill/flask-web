@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 REQUIRE_URL = [
     '/base/user/login', '/base/user/search'
-                        '/base/user/login', '/base/test/test-info'
+    '/base/user/login', '/base/test/test-info'
 ]
 
 

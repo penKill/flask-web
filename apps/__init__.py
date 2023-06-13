@@ -15,7 +15,7 @@ db = SQLAlchemy()
 
 # 初始化数据库
 def init_databases(app):
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@127.0.0.1:3306/lt'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:yyUXx3aHC88r@127.0.0.1:3306/lt'
     app.config["SQLALCHEMY_ECHO"] = True
     # 保证事务自动提交
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
